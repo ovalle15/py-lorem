@@ -22,7 +22,8 @@ steps:
       cat << EOF | buildkite-agent annotate --scope job --style "success" --context "agent-cli-example"
       ### result.txt output
 
-      $RESULT_1
+      tr -d '\r' < result.txt
+
       EOF
     artifact_paths:
       - result.txt
