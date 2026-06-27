@@ -19,7 +19,7 @@ steps:
 
       export RESULT_1="$(tr -d '\r' < result.txt)"
 
-      cat << EOF | buildkite-agent annotate --scope job --style "info" --context "agent-cli-example"
+      cat << EOF | buildkite-agent annotate --scope job --style "success" --context "agent-cli-example"
       ### result.txt output
 
       echo $RESULT_1
