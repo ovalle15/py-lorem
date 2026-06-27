@@ -11,7 +11,7 @@ steps:
           always-pull: true
           propagate-uid-gid: true
 
-  - label: ":writing_hand: Download / Print Result 1"
+  - label: ":writing_hand: Step with Annotation - Result 1"
     key: download_result_1
     command: |
       buildkite-agent artifact download result.txt . --step generate_sentence
@@ -40,7 +40,7 @@ steps:
           always-pull: true
           propagate-uid-gid: true
 
-  - label: ":writing_hand: Download / Print Result 2"
+  - label: ":writing_hand: Step with Annotation - Result 2"
     key: download_result_2
     command: |
       buildkite-agent artifact download result2.txt . --step generate_sentence_2
