@@ -39,3 +39,9 @@ steps:
     artifact_paths:
       - result2.txt
     depends_on: generate_sentence_2
+
+  - label: ":page_facing_up: Pipeline debug summary"
+    key: annotate_debug_summary
+    command: |
+      cat BUILDKITE_ANNOTATION_DEBUG_SUMMARY.md | buildkite-agent annotate --scope build --style "info" --context "annotation-debug-summary"
+    depends_on: download_result_2
