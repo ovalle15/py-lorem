@@ -50,8 +50,9 @@ steps:
       if [ -z "$RESULT_2" ]; then RESULT_2="(result2.txt was empty)"; fi
       cat << EOF | buildkite-agent annotate --scope job --style "info" --context "agent-cli-example-2"
       ### result2.txt output
-
+      <div style="word-wrap: break-word; white-space: pre-wrap;">
       $RESULT_2
+      </div>
       EOF
     artifact_paths:
       - result2.txt
