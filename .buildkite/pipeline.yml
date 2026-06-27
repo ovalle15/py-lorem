@@ -35,12 +35,9 @@ steps:
     command: |
       buildkite-agent artifact download result.txt . --step generate_sentence
       ls -la result.txt
-      cat << EOF | buildkite-agent annotate --style "info" --context "agent-cli-example"
+      cat << EOF | buildkite-agent annotate --scope job --style "info" --context "agent-cli-example"
       ### result.txt output
-
-      \\`\\`\\`text
-      $(cat result.txt)
-      \\`\\`\\`
+      This was created from within a build's job.
       EOF
     artifact_paths:
       - result.txt
@@ -64,12 +61,10 @@ steps:
     command: |
       buildkite-agent artifact download result2.txt . --step generate_sentence_2
       ls -la result2.txt
-      cat << EOF | buildkite-agent annotate --style "info" --context "agent-cli-example-2"
-      ### result2.txt output
+      cat << EOF | buildkite-agent annotate --scope job --style "info" --context "agent-cli-example-2"
+      ### Example job-scoped annotation
 
-      \\`\\`\\`text
-      $(cat result2.txt)
-      \\`\\`\\`
+      This was created from within a build's job.
       EOF
     artifact_paths:
       - result2.txt
