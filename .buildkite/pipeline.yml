@@ -42,7 +42,7 @@ steps:
 
   - label: ":docker: Build and push to Package Registries"
     agents:
-      queue: elastic
+      queue: key-self-hosted
     env:
       REGISTRY: "packages.buildkite.com/andrea-ovalle/docker-reg"
     command: |
