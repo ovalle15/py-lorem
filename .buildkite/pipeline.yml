@@ -39,24 +39,3 @@ steps:
     artifact_paths:
       - result2.txt
     depends_on: generate_sentence_2
-
-  - label: ":docker: Build and push to Package Registries"
-    agents:
-      queue: key-self-hosted
-    env:
-      REGISTRY: "packages.buildkite.com/andrea-ovalle/docker-reg"
-    command: |
-      # Authenticate using OIDC
-      buildkite-agent oidc request-token \
-        --audience "https://${REGISTRY}" \
-        --lifetime 300 | docker login ${REGISTRY} \
-        --username buildkite \
-        --password-stdin
-
-      # Build and push
-      docker buildx build \
-        --tag ${REGISTRY}/myapp:${BUILDKITE_BUILD_NUMBER} \
-        --tag ${REGISTRY}/myapp:latest \
-        --push \
-        --progress=plain \
-        .
