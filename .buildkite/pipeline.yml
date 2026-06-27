@@ -14,10 +14,16 @@ steps:
   - label: ":writing_hand: Download / Print Result 1"
     key: download_result_1
     command: |
-      buildkite-agent artifact download result.txt . --step generate_sentence
+      cat << 'EOF' | buildkite-agent artifact download result.txt . --step generate_sentence
       ls -la result.txt
+
+      buildkite-agent annotate --scope job --style "info" --context "agent-cli-example"
+
       RESULT_1="$(tr -d '\r' < result.txt)"
-      buildkite-agent annotate --scope job --style "info" --context "agent-cli-example" "$(printf '### result.txt output\n\n%s' "$RESULT_1")"
+
+      "$(printf '### result.txt output\n\n%s' "$RESULT_1")"
+
+      EOF
     artifact_paths:
       - result.txt
     depends_on: generate_sentence
@@ -41,7 +47,9 @@ steps:
       buildkite-agent artifact download result2.txt . --step generate_sentence_2
       ls -la result2.txt
       RESULT_2="$(tr -d '\r' < result2.txt)"
-      buildkite-agent annotate --scope job --style "info" --context "agent-cli-example-2" "$(printf '### result2.txt output\n\n%s' "$RESULT_2")"
+      buildkite-agent annotate --scope job --style "info" --context "agent-cli-example-2"
+
+      "$(printf '### result2.txt output\n\n%s' "$RESULT_2")"
     artifact_paths:
       - result2.txt
     depends_on: generate_sentence_2
