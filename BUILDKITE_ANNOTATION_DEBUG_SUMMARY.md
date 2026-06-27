@@ -1,6 +1,6 @@
 # Buildkite Annotation Debug Summary
 
-This document summarizes the problems I encountered while trying to annotate Buildkite steps for the `py-lorem` project, and how each one was resolved.
+I am summarizing the problems I encountered while trying to create the pipeline and annotate Buildkite steps.
 
 ## 1. Docker Desktop macOS bind-mount failure
 
