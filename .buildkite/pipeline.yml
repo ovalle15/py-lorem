@@ -1,23 +1,4 @@
 steps:
-  # - label: ":construction_worker: Build"
-  #   command: "scripts/build.sh"
-  #   key: build
-  #   plugins:
-  #     - docker#v5.13.0:
-  #         image: "python:3.13"
-  #         always-pull: true
-  #         propagate-uid-gid: true
-
-  # - label: ":white_check_mark: Test"
-  #   command: "scripts/test.sh"
-  #   key: test
-  #   depends_on: build
-  #   plugins:
-  #     - docker#v5.13.0:
-  #         image: "python:3.13"
-  #         always-pull: true
-  #         propagate-uid-gid: true
-
   - label: ":memo: Generate sentence"
     command: |
       python -c "import loremipsum; s=loremipsum.sentence(max_char=20); print(s); open('result.txt','w').write(s + '\\n')"
@@ -64,10 +45,3 @@ steps:
     artifact_paths:
       - result2.txt
     depends_on: generate_sentence_2
-
-  # - label: ":rocket: Deploy"
-  #   command: |
-  #     scripts/deploy.sh
-  #     cat .buildkite/annotation.md | buildkite-agent annotate --style "success"
-  #   key: deploy
-  #   depends_on: generate_result
