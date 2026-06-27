@@ -6,6 +6,7 @@ steps:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
+          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":white_check_mark: Test"
@@ -16,6 +17,7 @@ steps:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
+          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":memo: Generate sentence"
@@ -29,6 +31,7 @@ steps:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
+          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":writing_hand: Result 1"
@@ -54,6 +57,7 @@ steps:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
+          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":writing_hand: Result 2"
