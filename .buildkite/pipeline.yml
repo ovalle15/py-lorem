@@ -14,17 +14,7 @@ steps:
   - label: ":writing_hand: Step with Annotation - Result 1"
     key: download_result_1
     command: |
-      buildkite-agent artifact download result.txt . --step generate_sentence
-      ls -la result.txt
-
-      export RESULT_1="$(tr -d '\r' < result.txt)"
-
-      cat << 'EOF' | buildkite-agent annotate --scope job --style "success" --context "agent-cli-example"
-      ### result.txt output
-
-      $RESULT_1
-
-      # EOF
+      sh .buildkite/scripts/annotate_result.sh result.txt generate_sentence agent-cli-example success "result.txt output"
     artifact_paths:
       - result.txt
     depends_on: generate_sentence
@@ -45,18 +35,7 @@ steps:
   - label: ":writing_hand: Step with Annotation - Result 2"
     key: download_result_2
     command: |
-      buildkite-agent artifact download result2.txt . --step generate_sentence_2
-      ls -la result2.txt
-
-      RESULT_2="$(tr -d '\r\n' < result2.txt)"
-
-      if [ -z "$RESULT_2" ]; then RESULT_2="(result2.txt was empty)"; fi
-      cat << 'EOF' | buildkite-agent annotate --scope job --style "info" --context "agent-cli-example-2"
-      ### result2.txt output
-
-      ${RESULT_2}
-
-      # EOF
+      sh .buildkite/scripts/annotate_result.sh result2.txt generate_sentence_2 agent-cli-example-2 info "result2.txt output"
     artifact_paths:
       - result2.txt
     depends_on: generate_sentence_2
