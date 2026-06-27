@@ -16,10 +16,14 @@ steps:
     command: |
       buildkite-agent artifact download result.txt . --step generate_sentence
       ls -la result.txt
-      RESULT_1="$(tr -d '\r\n' < result.txt)"
-      if [ -z "$RESULT_1" ]; then RESULT_1="(result.txt was empty)"; fi
-      BODY_1="$(printf '### result.txt output\n\n%s' "$RESULT_1")"
-      buildkite-agent annotate --scope job --style "info" --context "agent-cli-example" "$BODY_1"
+
+      export RESULT_1="$(tr -d '\r' < result.txt)"
+
+      cat << EOF | buildkite-agent annotate --scope job --style "success" --context "agent-cli-example"
+      ### result.txt output
+
+      $RESULT_1
+      EOF
     artifact_paths:
       - result.txt
     depends_on: generate_sentence
@@ -44,8 +48,11 @@ steps:
       ls -la result2.txt
       RESULT_2="$(tr -d '\r\n' < result2.txt)"
       if [ -z "$RESULT_2" ]; then RESULT_2="(result2.txt was empty)"; fi
-      BODY_2="$(printf '### result2.txt output\n\n%s' "$RESULT_2")"
-      buildkite-agent annotate --scope job --style "info" --context "agent-cli-example-2" "$BODY_2"
+      cat << EOF | buildkite-agent annotate --scope job --style "info" --context "agent-cli-example-2"
+      ### result2.txt output
+
+      $RESULT_2
+      EOF
     artifact_paths:
       - result2.txt
     depends_on: generate_sentence_2
