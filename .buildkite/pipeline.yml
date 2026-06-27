@@ -17,12 +17,12 @@ steps:
       buildkite-agent artifact download result.txt . --step generate_sentence
       ls -la result.txt
 
-      RESULT_1="$(cat result.txt | tr -d '\r\n' | xargs)"
-      if [ -z "$RESULT_1" ]; then RESULT_1="(result.txt was empty)"; fi
+      export RESULT_1="$(tr -d '\r' < result.txt)"
+
       cat << EOF | buildkite-agent annotate --scope job --style "info" --context "agent-cli-example"
       ### result.txt output
 
-      ${RESULT_1}
+      echo RESULT_1
       EOF
     artifact_paths:
       - result.txt
