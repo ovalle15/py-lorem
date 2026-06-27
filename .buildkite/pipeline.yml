@@ -2,22 +2,26 @@ steps:
   - label: ":construction_worker: Build"
     command: "scripts/build.sh"
     key: build
+    env:
+      BUILDKITE_AGENT_JOB_API_SOCKET: ""
+      BUILDKITE_AGENT_JOB_API_TOKEN: ""
     plugins:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
-          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":white_check_mark: Test"
     command: "scripts/test.sh"
     key: test
     depends_on: build
+    env:
+      BUILDKITE_AGENT_JOB_API_SOCKET: ""
+      BUILDKITE_AGENT_JOB_API_TOKEN: ""
     plugins:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
-          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":memo: Generate sentence"
@@ -25,13 +29,15 @@ steps:
       python -c "import loremipsum; s=loremipsum.sentence(max_char=20); print(s); open('result.txt','w').write(s + '\\n')"
     key: generate_result
     depends_on: test
+    env:
+      BUILDKITE_AGENT_JOB_API_SOCKET: ""
+      BUILDKITE_AGENT_JOB_API_TOKEN: ""
     artifact_paths:
       - result.txt
     plugins:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
-          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":writing_hand: Result 1"
@@ -51,13 +57,15 @@ steps:
       python -c "import loremipsum; s=loremipsum.sentence(max_char=100); print(s); open('result2.txt','w').write(s + '\\n')"
     key: generate_result_2
     depends_on: test
+    env:
+      BUILDKITE_AGENT_JOB_API_SOCKET: ""
+      BUILDKITE_AGENT_JOB_API_TOKEN: ""
     artifact_paths:
       - result2.txt
     plugins:
       - docker#v5.13.0:
           image: "python:3.13"
           always-pull: true
-          mount-buildkite-agent: false
           propagate-uid-gid: true
 
   - label: ":writing_hand: Result 2"
