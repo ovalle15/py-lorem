@@ -30,10 +30,11 @@ steps:
           always-pull: true
           propagate-uid-gid: true
 
-  - label: ":writing_hand: Download Result 1"
+  - label: ":writing_hand: Download / Print Result 1"
     key: download_result_1
     command: |
-      buildkite-agent artifact download result.txt .
+      buildkite-agent artifact download result.txt . --step generate_sentence
+      ls -la result.txt
       cat << EOF | buildkite-agent annotate --style "info" --context "agent-cli-example"
       ### result.txt output
 
@@ -41,6 +42,8 @@ steps:
       $(cat result.txt)
       \\`\\`\\`
       EOF
+    artifact_paths:
+      - result.txt
     depends_on: generate_sentence
 
   - label: ":memo: Generate sentence round 2"
@@ -56,9 +59,11 @@ steps:
           always-pull: true
           propagate-uid-gid: true
 
-  - label: ":writing_hand: Result 2"
+  - label: ":writing_hand: Download / Print Result 2"
+    key: download_result_2
     command: |
-      buildkite-agent artifact download result2.txt .
+      buildkite-agent artifact download result2.txt . --step generate_sentence_2
+      ls -la result2.txt
       cat << EOF | buildkite-agent annotate --style "info" --context "agent-cli-example-2"
       ### result2.txt output
 
@@ -66,6 +71,8 @@ steps:
       $(cat result2.txt)
       \\`\\`\\`
       EOF
+    artifact_paths:
+      - result2.txt
     depends_on: generate_sentence_2
 
   # - label: ":rocket: Deploy"
